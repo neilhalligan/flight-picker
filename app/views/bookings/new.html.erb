@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3 well">
+    <h3 class="form-title">Enter Passenger Details</h3>
+    <%= form_for @booking do |f| %>
+      <%= hidden_field_tag :flight_id, @flight.id %>
+      <% @num_tickets.times do %>
+        <div>
+          <% @passenger_count += 1 %>
+          <h4>Passenger <%= @passenger_count %></h4>
+          <%= f.fields_for :passengers, Passenger.new do |p| %>
+            <%= label_tag(:name, "Name") %>
+            <%= p.text_field :name, class: "form-control" %>
+            <%= label_tag(:name, "Email") %>
+            <%= p.text_field :email, class: "form-control" %>
+          <% end %>
+        </div>
+      <% end %>
+      <%= f.submit "Book!", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

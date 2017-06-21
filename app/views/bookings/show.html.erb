@@ -1,0 +1,8 @@
+<div class="col-md-6 col-md-offset-3 well">
+  <div>
+    <%= @booking.flight.date %>
+    <% @booking.passengers.each do |passenger| %>
+    <p><%= passenger.name %></p>
+    <% end %>
+  </div>
+</div>

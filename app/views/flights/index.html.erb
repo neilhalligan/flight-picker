@@ -1,0 +1,60 @@
+<div class="col-md-8 col-md-offset-2 well">
+  <h3 class="form-title">Search for flights</h3>
+  <form action="/" method="get">
+    <div class="row">
+      <div class="col-md-6">
+        <%= label_tag(:from_code, "From:") %>
+        <%= select_tag(:from_code, options_for_select(@airports), class: "form-control") %>
+      </div>
+      <div class="col-md-6">
+        <%= label_tag(:to_code, "To:") %>
+        <%= select_tag(:to_code, options_for_select(@airports), class: "form-control") %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <%= label_tag(:date, "Date:") %>
+        <%= select_tag(:date, options_for_select(@available_dates), class: "form-control") %>
+      </div>
+      <div class="col-md-6">
+        <%= label_tag(:num_tickets, "No of passengers:") %>
+        <%= select_tag(:num_tickets, options_for_select([1, 2, 3, 4]), class: "form-control") %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">
+        <%= submit_tag("Search", class: "btn btn-primary")  %>
+      </div>
+    </div>
+  </form>
+  <% unless @flight_results.nil? %>
+    <h2 class="form-title">Select flight</h2>
+    <form action="/bookings/new" method="get">
+      <% @flight_results.each do |flight_result| %>
+        <div class="flight-card">
+          <p>From: <%= flight_result.from_airport.airport_code %></p>
+          <p>To: <%= flight_result.to_airport.airport_code %></p>
+          <p>Date: <%= flight_result.date %></p>
+          <%= radio_button_tag("flight_id", flight_result.id, ) %>
+          <%= hidden_field_tag :num_tickets, params[:num_tickets] %>
+        </div>
+      <% end %>
+      <%= submit_tag("Book flight", class: "btn btn-primary")  %>
+    </form>
+  <% end %>
+</div>
+
+<script>
+  $(document).ready(
+    function()
+      {
+        $(".flight-card").click(
+          function(event)
+            {
+              $(this).addClass("active").siblings().removeClass("active");
+              $(".active input[type='radio']").prop("checked", true).siblings().prop("checked", false);
+            }
+        );
+      }
+  );
+</script>
