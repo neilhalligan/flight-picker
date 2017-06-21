@@ -8,7 +8,7 @@
   <div>
     <h3 class="form-title">Passenger Details</h3>
     <% @booking.passengers.each do |passenger| %>
-    <p><%= passenger.name %></p>
+    <p>Adult: <%= passenger.name %></p>
     <% end %>
   </div>
   <%= form_tag charges_path do %>
@@ -19,14 +19,14 @@
         </div>
       <% end %>
       <label class="amount">
-        <span>€<%= pretty_amount(@amount) %></span>
+        <span><%= pretty_amount @amount %></span>
       </label>
     </article>
 
     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
       data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
       data-description="A month's subscription"
-      data-amount=<%= pretty_amount(@amount) %>
+      data-amount=<%= @amount %>
       data-locale="eur">
     </script>
   <% end %>

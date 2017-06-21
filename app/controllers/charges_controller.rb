@@ -11,8 +11,7 @@ class ChargesController < ApplicationController
     charge = StripeTool.create_charge(
       customer_id: customer.id,
       amount: @amount,
-      description: 'Rails Stripe customer',
-      currency: 'eur'
+      description: 'Rails Stripe customer'
     )
   rescue Stripe::CardError => e
     flash[:error] = e.message
